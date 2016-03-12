@@ -19,20 +19,20 @@ string dialog{"Type in the words, Press enter to complete the battle..."};
 string tips{"And save the little village or something!"};
 
 vector<string> words;
-int level = 5;
-int experience = 9;
+int level = 1;
+int experience = 0;
 
 string wordInput{""};
 int wordsComplete = 0;
 
 int exp_to_next()
 {
-	return (int)(level * 2 + ((level * 13) / level) / 5);
+	return (int)(level * 2 + ((level * 17) / level) / 5);
 }
 
 void get_new_words()
 {
-	int count = (int)(level * (level + 3 / (level)));
+	int count = (int)(level * (level + 1 / (level)));
 	wordsComplete = 0;
 	words.clear();
 	for(int i = 0; i < count; i++)
