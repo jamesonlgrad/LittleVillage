@@ -4,7 +4,7 @@ wordlist = {  }
 maxword = 0
 
 poemlist = {  }
-curpoem = 1
+curpoem = 0
 maxpoem = 0
 
 storylist = {  }
@@ -28,12 +28,8 @@ function random_word()
 end
 
 function next_poem()
-	local opt = " "
-	if(math.random(100) == 1) then
-		opt = poemlist[curpoem]
-		curpoem = curpoem + 1
-	end
-	return opt
+	curpoem = curpoem + 1
+	return poemlist[curpoem]
 end
 
 function next_story()

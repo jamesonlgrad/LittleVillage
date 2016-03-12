@@ -1,4 +1,4 @@
-CC = g++ -std=c++14
+CC = mingw32-g++ -std=c++14
 
 BUILD_TARGET = ../bin/LittleVillage.exe	
 

@@ -1,5 +1,5 @@
 #include <lua.hpp>
-#include <curses.h>
+#include <ncurses/ncurses.h>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -13,7 +13,7 @@ int screen_width{0}, screen_height{0};
 
 lua_State *lua;
 
-char getinput;
+int getinput;
 
 string dialog{"Type in the words, Press enter to complete the battle..."};
 string tips{"And save the little village or something!"};
@@ -27,7 +27,7 @@ int wordsComplete = 0;
 
 int exp_to_next()
 {
-	return (int)(level * 2 + ((level * 17) / level) / 5);
+	return (int)(level * 2 + ((level * 17) / level) / 8);
 }
 
 void get_new_words()
@@ -65,11 +65,12 @@ void process_input()
 	}
 	else
 	{
-		if(getinput >= 'A' && getinput <= 'z')
+		if((getinput >= 'A' && getinput <= 'Z') ||
+			(getinput >= 'a' && getinput <= 'z'))
 		{
 			wordInput.insert(wordInput.end(), getinput);
 		}
-		if(getinput == 127 && wordInput.size() >= 1)
+		if(getinput == 8 && wordInput.size() >= 1)
 		{
 			wordInput.erase(wordInput.end()-1);
 		}
@@ -106,11 +107,13 @@ void process_input()
 
 int main(int argc, char *argv[])
 {	
+	setlocale(LC_CTYPE, "");
 	initscr();
 	noecho();
 	keypad(stdscr, TRUE);
 	curs_set(0);
-	timeout(-1);
+	
+	raw();
 
 	start_color();
 
@@ -197,7 +200,7 @@ int main(int argc, char *argv[])
 		doupdate();
 		
 		getinput = 0;
-		getinput = (char)getch();
+		getinput = getch();
 		process_input();
 	}
 	
